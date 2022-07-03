@@ -1,4 +1,6 @@
 import { Container, Stack } from "@mui/material";
+import Alert from "../Alert";
+
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUser, updateUser } from "../../api/users";
@@ -63,6 +65,10 @@ const ProfileView = () => {
   const handleMessage = async (e, userReceiverId) => {
     e.preventDefault();
     const data = await sendInvitation(userReceiverId, profile.user._id);
+    console.log(
+      "🚀 ~ file: ProfileView.js ~ line 66 ~ handleMessage ~ data",
+      data
+    );
 
     if (data.error) {
       setServerError(data.error);
@@ -90,8 +96,12 @@ const ProfileView = () => {
               handleSubmit={handleSubmit}
               handleEditing={handleEditing}
               handleMessage={handleMessage}
+              onChange={handleChange}
             />
-
+            {serverError && <Alert error={serverError} />}
+            {successMessage && (
+              <Alert severity='success' message={successMessage} />
+            )}
             <FindUsersInvitations />
             <Footer />
           </Stack>

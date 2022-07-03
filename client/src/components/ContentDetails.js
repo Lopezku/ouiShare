@@ -7,7 +7,7 @@ import UserAvatar from "./UserAvatar";
 const ContentDetails = ({ username }) => {
   return (
     <HorizontalStack sx={{}}>
-      <UserAvatar width={30} height={30} />
+      <UserAvatar width={30} height={30} username={username} />
       <Typography variant='subtitle2' color='text.secondary' gutterBottom>
         <Link
           color='inherit'

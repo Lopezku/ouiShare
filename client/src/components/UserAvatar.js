@@ -1,7 +1,7 @@
 import { Avatar } from "@mui/material";
 import React from "react";
 
-const UserAvatar = ({ height, width }) => {
+const UserAvatar = ({ height, width, username }) => {
   return (
     <Avatar
       sx={{
@@ -9,8 +9,9 @@ const UserAvatar = ({ height, width }) => {
         width: width,
         backgroundColor: "lightgray",
       }}
-      src={"https://avatars.dicebear.com/api/micah/:seed.svg"}
-      // src={"https://robohash.org/" + username}
+      //src={"https://avatars.dicebear.com/api/micah/:seed.svg"}
+      //src={`https://source.unsplash.com/user/c_v_r/${height}x${width}`}
+      src={`https://ui-avatars.com/api/?background=random&name=${username}`}
     />
   );
 };

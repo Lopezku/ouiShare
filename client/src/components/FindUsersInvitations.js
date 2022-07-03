@@ -24,7 +24,11 @@ const DeclinedInvitations = ({ invitations }) => {
       return (
         <HorizontalStack justifyContent='space-between' key={invitation._id}>
           <HorizontalStack>
-            <UserAvatar width={30} height={30} />
+            <UserAvatar
+              width={30}
+              height={30}
+              username={invitation.sender.username}
+            />
             <Typography>{invitation.sender.name}</Typography>
           </HorizontalStack>
         </HorizontalStack>
@@ -40,7 +44,11 @@ const AcceptedInvitations = ({ invitations }) => {
       return (
         <HorizontalStack justifyContent='space-between' key={invitation._id}>
           <HorizontalStack>
-            <UserAvatar width={30} height={30} />
+            <UserAvatar
+              width={30}
+              height={30}
+              username={invitation.sender.username}
+            />
             <Typography>{invitation.sender.name} </Typography>
           </HorizontalStack>
         </HorizontalStack>
@@ -63,7 +71,11 @@ const PendingInvitations = ({ invitations, fetchInvitations }) => {
       return (
         <HorizontalStack justifyContent='space-between' key={invitation._id}>
           <HorizontalStack>
-            <UserAvatar width={30} height={30} />
+            <UserAvatar
+              width={30}
+              height={30}
+              username={invitation.sender.username}
+            />
             <Typography>Accepter : {invitation.sender.name}</Typography>
             <Divider />
             <br></br>
@@ -117,7 +129,9 @@ const FindUsersInvitations = () => {
         { pending: [], accepted: [], declined: [] }
       );
       setInvitations(groupedInvitations);
-    } else {
+    } else if (data.data.error === "User does not exist") {
+      console.log("line 121", data);
+      setLoading(false);
       return [];
     }
   };

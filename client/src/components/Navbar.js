@@ -101,7 +101,7 @@ const Navbar = () => {
           <Box component='form' onSubmit={handleSubmit}>
             <TextField
               size='small'
-              label='Chercher des offres de services'
+              label='Un service ou un share-ami?'
               sx={{ flexGrow: 1, maxWidth: 300 }}
               onChange={handleChange}
               value={search}
@@ -142,7 +142,7 @@ const Navbar = () => {
         <Box component='form' onSubmit={handleSubmit} mt={2}>
           <TextField
             size='small'
-            label='Chercher des offres de services...'
+            label='Un service ou un share-ami?'
             fullWidth
             onChange={handleChange}
             value={search}

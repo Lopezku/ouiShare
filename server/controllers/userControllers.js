@@ -106,7 +106,16 @@ const search = async (req, res) => {
   try {
     const search = req.query.search;
     let users = [];
-    if (search) users = await User.find({ offers: { $in: search } });
+    //const regexSearch = `^${search}$`;
+    if (search)
+      users = await User.find({
+        $or: [
+          {
+            offers: { $regex: new RegExp(search, "i") },
+          },
+          { username: { $regex: new RegExp(search, "i") } },
+        ],
+      });
     else {
       users = await User.find({});
     }

@@ -27,7 +27,7 @@ httpServer.listen(process.env.PORT || 4000, () => {
 app.use("/api/users", users);
 
 if (process.env.NODE_ENV == "production") {
-  app.use(express.static(path.join(__dirname, "/client/build")));
+  app.use(express.static(path.join(__dirname, "..", "/client/build")));
 
   app.get("*", (req, res) => {
     res.set("Access-Control-Allow-Origin", "*");

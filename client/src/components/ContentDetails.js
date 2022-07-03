@@ -4,7 +4,7 @@ import HorizontalStack from "./util/HorizontalStack";
 import Moment from "react-moment";
 import UserAvatar from "./UserAvatar";
 
-const ContentDetails = ({ username, createdAt, edited, preview }) => {
+const ContentDetails = ({ username }) => {
   return (
     <HorizontalStack sx={{}}>
       <UserAvatar width={30} height={30} />
@@ -19,12 +19,6 @@ const ContentDetails = ({ username, createdAt, edited, preview }) => {
         >
           {username}
         </Link>
-        {!preview && (
-          <>
-            {" "}
-            · <Moment fromNow>{createdAt}</Moment> {edited && <>(Edited)</>}
-          </>
-        )}
       </Typography>
     </HorizontalStack>
   );

@@ -8,8 +8,6 @@ import ContentDetails from "./ContentDetails";
 import UserContentBox from "./UserContentBox";
 import HorizontalStack from "./util/HorizontalStack";
 
-import {} from "react-icons/ai";
-
 import "./userCard.css";
 
 const UserCard = (props) => {
@@ -42,10 +40,7 @@ const UserCard = (props) => {
           ></Stack>
           <UserContentBox clickable={preview} post={user}>
             <HorizontalStack justifyContent='space-between'>
-              <ContentDetails
-                username={user.username}
-                preview={preview === "secondary"}
-              />
+              <ContentDetails username={user.username} />
               <Box>
                 {user && (isAuthor || user.isAdmin) && preview !== "secondary" && (
                   <HorizontalStack>

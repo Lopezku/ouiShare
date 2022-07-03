@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUser, updateUser } from "../../api/users";
 import { isLoggedIn } from "../../helpers/authHelper";
-
-import FindUsers from "../FindUsers";
+import { sendInvitation } from "../../api/invitations";
+import FindUsersInvitations from "../FindUsersInvitations";
 import Footer from "../Footer";
 import GridLayout from "../GridLayout";
 import Navbar from "../Navbar";
@@ -12,6 +12,11 @@ import Profile from "../Profile";
 import OffersBrowser from "../OffersBrowser";
 
 const ProfileView = () => {
+  /*   const [formData, setFormData] = useState({
+    email: "",
+  }); */
+  const [serverError, setServerError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(null);
   const [editing, setEditing] = useState(false);
@@ -31,7 +36,12 @@ const ProfileView = () => {
       setProfile(data);
     }
   };
+  const handleChange = (e) => {
+    setServerError(null);
+    setSuccessMessage(null);
 
+    //setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,8 +60,16 @@ const ProfileView = () => {
     setEditing(!editing);
   };
 
-  const handleMessage = () => {
-    navigate("/messenger", { state: { user: profile.user } });
+  const handleMessage = async (e, userReceiverId) => {
+    e.preventDefault();
+    const data = await sendInvitation(userReceiverId, profile.user._id);
+
+    if (data.error) {
+      setServerError(data.error);
+    }
+    if (data.message) {
+      setSuccessMessage(data.message);
+    }
   };
 
   useEffect(() => {
@@ -74,7 +92,7 @@ const ProfileView = () => {
               handleMessage={handleMessage}
             />
 
-            <FindUsers />
+            <FindUsersInvitations />
             <Footer />
           </Stack>
         }

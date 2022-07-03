@@ -7,7 +7,6 @@ import { isLoggedIn } from "../helpers/authHelper";
 import ContentUpdateEditor from "./ContentUpdateEditor";
 import Loading from "./Loading";
 import UserAvatar from "./UserAvatar";
-import HorizontalStack from "./util/HorizontalStack";
 
 const Profile = (props) => {
   const [user, setUser] = useState(null);
@@ -26,7 +25,6 @@ const Profile = (props) => {
       {user ? (
         <Stack alignItems='center' spacing={2}>
           <Box my={1}>
-            .bmjs0zez6nc
             <UserAvatar width={150} height={150} username={user.username} />
           </Box>
 
@@ -82,13 +80,18 @@ const Profile = (props) => {
           )}
 
           {currentUser && user._id !== currentUser.userId && (
-            <Button variant='outlined' onClick={props.handleMessage}>
-              Message
+            <Button
+              variant='outlined'
+              onClick={(event) =>
+                props.handleMessage(event, currentUser.userId)
+              }
+            >
+              Envoyer une invitation
             </Button>
           )}
         </Stack>
       ) : (
-        <Loading label='Loading profile' />
+        <Loading label='Chargement du profil' />
       )}
     </Card>
   );

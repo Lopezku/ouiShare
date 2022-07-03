@@ -1,13 +1,13 @@
 import { Stack } from "@mui/material";
 import React from "react";
 
-import FindUsers from "./FindUsers";
+import FindUsersInvitations from "./FindUsersInvitations";
 import Footer from "./Footer";
 
 const Sidebar = () => {
   return (
     <Stack spacing={2}>
-      <FindUsers />
+      <FindUsersInvitations />
       <Footer />
     </Stack>
   );

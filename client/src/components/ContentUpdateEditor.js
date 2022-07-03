@@ -47,7 +47,7 @@ const ContentUpdateEditor = (props) => {
           variant='outlined'
           sx={{ backgroundColor: "white", mt: 1 }}
         >
-          Update
+          Modifier
         </Button>
       </Stack>
     </Box>

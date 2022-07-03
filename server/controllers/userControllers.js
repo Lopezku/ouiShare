@@ -126,6 +126,7 @@ const forgotPassword = async (req, res) => {
     if (!user) {
       throw new Error("Vérifier votre boite email");
     }
+
     const newpassword = Math.random().toString(36).slice(-12);
     const hashedPassword = await bcrypt.hash(newpassword, 10);
     user.password = hashedPassword;
@@ -140,6 +141,10 @@ const forgotPassword = async (req, res) => {
          <p>Vous pouvez vous connecter sur: <a href="https://ouishare.herokuapp.com/" target="_blank">https://ouishare.herokuapp.com/</a></p>`,
     };
     await send(message);
+    return res.status(200).json({
+      message: "Un email vous a été envoyé avec votre nouveau mot de passe",
+      error: null,
+    });
   } catch (err) {
     console.log(err);
     return res.status(400).json({ error: err.message });

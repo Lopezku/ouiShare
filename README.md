@@ -10,7 +10,7 @@ https://www.flaticon.com/fr/icones-gratuites/troc
 ## Installation
 
 1. Clone this repository
-   git clone https://github.com/Lopezku/ouiShare.gi
+   git clone https://github.com/Lopezku/ouiShare.git
 
 2. Installer les packages pour Client et server
    npm install

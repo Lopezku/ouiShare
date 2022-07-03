@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import { signup } from "../../api/users";
 import { loginUser } from "../../helpers/authHelper";
 import { useNavigate } from "react-router-dom";
-import ErrorAlert from "../ErrorAlert";
+import Alert from "../Alert";
 import { isLength, isEmail, contains } from "validator";
 
 const SignupView = () => {
@@ -155,22 +155,17 @@ const SignupView = () => {
           <RadioGroup>
             <FormControlLabel
               control={
-                <Radio
-                  defaultChecked
-                  onChange={handleChange}
-                  id='gender'
-                  name='gender'
-                />
-              }
-              label='Homme'
-              value='homme'
-            />
-            <FormControlLabel
-              control={
-                <Radio onChange={handleChange} id='gender' name='gender' />
+                <Radio onChange={handleChange} id='genderF' name='gender' />
               }
               label='Femme'
               value='femme'
+            />
+            <FormControlLabel
+              control={
+                <Radio onChange={handleChange} id='genderM' name='gender' />
+              }
+              label='Homme'
+              value='homme'
             />
           </RadioGroup>
 
@@ -234,7 +229,7 @@ const SignupView = () => {
             error={errors.offers !== undefined}
             helperText={errors.offers}
           />
-          <ErrorAlert error={serverError} />
+          <Alert error={serverError} />
           <Button type='submit' fullWidth variant='contained'>
             Créer mon compte
           </Button>

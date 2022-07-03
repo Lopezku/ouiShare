@@ -1,9 +1,6 @@
 import {
-  Alert,
   Button,
-  Checkbox,
   Container,
-  FormControlLabel,
   Link,
   Stack,
   TextField,
@@ -13,7 +10,7 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/users";
-import ErrorAlert from "../ErrorAlert";
+import Alert from "../Alert";
 import { loginUser } from "../../helpers/authHelper";
 import Copyright from "../Copyright";
 
@@ -80,7 +77,7 @@ const LoginView = () => {
             type='password'
           />
 
-          <ErrorAlert error={serverError} />
+          <Alert error={serverError} />
           <Button type='submit' fullWidth variant='contained'>
             Login
           </Button>

@@ -26,6 +26,7 @@ const Profile = (props) => {
       {user ? (
         <Stack alignItems='center' spacing={2}>
           <Box my={1}>
+            .bmjs0zez6nc
             <UserAvatar width={150} height={150} username={user.username} />
           </Box>
 
@@ -85,15 +86,6 @@ const Profile = (props) => {
               Message
             </Button>
           )}
-
-          <HorizontalStack>
-            <Typography color='text.secondary'>
-              Likes <b>{props.profile.posts.likeCount}</b>
-            </Typography>
-            <Typography color='text.secondary'>
-              Posts <b>{props.profile.posts.count}</b>
-            </Typography>
-          </HorizontalStack>
         </Stack>
       ) : (
         <Loading label='Loading profile' />

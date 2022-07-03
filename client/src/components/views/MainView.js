@@ -8,14 +8,14 @@ import Navbar from "../Navbar";
 
 import Sidebar from "../Sidebar";
 
-import PostBrowser from "../OffersBrowser";
+import OffersBrowser from "../OffersBrowser";
 
 const MainView = () => {
   return (
     <Container>
       <Navbar />
       <GridLayout
-        left={<PostBrowser createPost contentType='offers' />}
+        left={<OffersBrowser contentType='offers' />}
         right={<Sidebar />}
       />
     </Container>

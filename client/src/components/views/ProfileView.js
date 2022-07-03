@@ -9,6 +9,7 @@ import Footer from "../Footer";
 import GridLayout from "../GridLayout";
 import Navbar from "../Navbar";
 import Profile from "../Profile";
+import OffersBrowser from "../OffersBrowser";
 
 const ProfileView = () => {
   const [loading, setLoading] = useState(true);
@@ -62,6 +63,7 @@ const ProfileView = () => {
       <Navbar />
 
       <GridLayout
+        left={<OffersBrowser contentType='offers' />}
         right={
           <Stack spacing={2}>
             <Profile

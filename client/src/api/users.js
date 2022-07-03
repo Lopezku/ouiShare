@@ -71,19 +71,6 @@ const getRandomUsers = async (query) => {
     console.log(err);
   }
 };
-const getUsersInvitations = async (userId) => {
-  try {
-    const res = await fetch(BASE_URL + "api/users/invitations/" + userId, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    return res.json();
-  } catch (err) {
-    console.log(err);
-  }
-};
 
 const updateUser = async (user, data) => {
   try {
@@ -125,5 +112,4 @@ export {
   getRandomUsers,
   updateUser,
   forgotPassword,
-  getUsersInvitations,
 };

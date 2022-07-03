@@ -3,18 +3,23 @@ import {
   Divider,
   IconButton,
   Link,
+  Button,
   Stack,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdRefresh } from "react-icons/md";
-import { getUsersInvitations } from "../api/users";
+import {
+  getUsersInvitations,
+  updateInvitationStatus,
+} from "../api/invitations";
 import { isLoggedIn } from "../helpers/authHelper";
 import Loading from "./Loading";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
-const PendingInvitations = ({ invitations }) => {
+
+const AcceptedInvitations = ({ invitations }) => {
   return invitations.length ? (
     invitations.map((invitation) => {
       return (
@@ -22,6 +27,47 @@ const PendingInvitations = ({ invitations }) => {
           <HorizontalStack>
             <UserAvatar width={30} height={30} />
             <Typography>Nom:{invitation.sender.name}</Typography>
+          </HorizontalStack>
+        </HorizontalStack>
+      );
+    })
+  ) : (
+    <div>Pas d'invitations pending</div>
+  );
+};
+const PendingInvitations = ({ invitations, fetchInvitations }) => {
+  const handleInvitationRequest = async (invitationId, status) => {
+    const data = await updateInvitationStatus(invitationId, status);
+    console.log(data);
+    if (data.data.message === "success") {
+      fetchInvitations();
+    }
+  };
+  return invitations.length ? (
+    invitations.map((invitation) => {
+      return (
+        <HorizontalStack justifyContent='space-between' key={invitation._id}>
+          <HorizontalStack>
+            <UserAvatar width={30} height={30} />
+            <Typography>
+              Invitations en attente reçues de :{invitation.sender.name}
+            </Typography>
+            <Button
+              color='success'
+              onClick={() =>
+                handleInvitationRequest(invitation._id, "accepted")
+              }
+            >
+              A{" "}
+            </Button>
+            <Button
+              color='error'
+              onClick={() =>
+                handleInvitationRequest(invitation._id, "declined")
+              }
+            >
+              R{" "}
+            </Button>
           </HorizontalStack>
         </HorizontalStack>
       );
@@ -83,9 +129,14 @@ const FindUsersInvitations = () => {
           <Loading />
         ) : (
           <>
-            <PendingInvitations invitations={invitations.pending} />
-            {/* <AcceptedInvitations invitations={invitations.accepted} />
-            <DeclinedInvitations invitations={invitations.declined} /> */}
+            <PendingInvitations
+              invitations={invitations.pending}
+              fetchInvitations={fetchInvitations}
+            />
+            {
+              <AcceptedInvitations invitations={invitations.accepted} />
+              /* <DeclinedInvitations invitations={invitations.declined} /> */
+            }
           </>
         )}
       </Stack>

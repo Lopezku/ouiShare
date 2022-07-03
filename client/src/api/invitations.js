@@ -17,5 +17,35 @@ const sendInvitation = async (idSender, idReceiver) => {
     console.log(err);
   }
 };
-
-export { sendInvitation };
+const getUsersInvitations = async (userId) => {
+  try {
+    const res = await fetch(BASE_URL + "api/users/invitations/" + userId, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+const updateInvitationStatus = async (invitationId, status) => {
+  try {
+    const res = await fetch(
+      BASE_URL + "api/users/updateInvitations/" + invitationId,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      }
+    );
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+export { sendInvitation, updateInvitationStatus, getUsersInvitations };

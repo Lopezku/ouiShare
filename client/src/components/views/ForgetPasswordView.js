@@ -12,7 +12,7 @@ import { forgotPassword } from "../../api/users";
 import Alert from "../Alert";
 import Copyright from "../Copyright";
 
-const LoginView = () => {
+const ForgetPasswordView = () => {
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -87,4 +87,4 @@ const LoginView = () => {
   );
 };
 
-export default LoginView;
+export default ForgetPasswordView;

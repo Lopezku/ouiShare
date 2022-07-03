@@ -13,7 +13,7 @@ import theme from "./theme";
 import ProfileView from "./components/views/ProfileView";
 import LoginView from "./components/views/LoginView";
 import SignupView from "./components/views/SignupView";
-import ForgetPassword from "./components/views/ForgetPassword";
+import ForgetPassword from "./components/views/ForgetPasswordView";
 import MainView from "./components/views/MainView";
 import SearchView from "./components/views/SearchView";
 

@@ -1,3 +1,5 @@
+import { useTheme } from "@emotion/react";
+
 import {
   Button,
   Container,
@@ -16,6 +18,7 @@ const ForgetPasswordView = () => {
   const [formData, setFormData] = useState({
     email: "",
   });
+  const theme = useTheme();
 
   const [serverError, setServerError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -42,7 +45,7 @@ const ForgetPasswordView = () => {
   return (
     <Container>
       <Stack alignItems='center'>
-        <Typography variant='h2' color='text.secondary'>
+        <Typography variant='h2' color={theme.palette.primary.main}>
           <Link href='/' color='inherit' underline='none'>
             OuiShare
           </Link>
@@ -77,7 +80,7 @@ const ForgetPasswordView = () => {
         <Box>
           <Copyright />
         </Box>
-        <Typography variant='h4' color='text.secondary'>
+        <Typography variant={"h4"} mr={1} color={theme.palette.primary.main}>
           <Link href='/login' color='inherit' underline='none'>
             Login
           </Link>

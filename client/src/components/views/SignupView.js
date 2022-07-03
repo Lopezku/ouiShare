@@ -1,3 +1,5 @@
+import { useTheme } from "@emotion/react";
+
 import {
   Button,
   Container,
@@ -21,6 +23,7 @@ const SignupView = () => {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState("");
   const [errors, setErrors] = useState({});
+  const theme = useTheme();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -92,7 +95,7 @@ const SignupView = () => {
   return (
     <Container>
       <Stack alignItems='center'>
-        <Typography variant='h2' color='text.secondary'>
+        <Typography variant='h2' color={theme.palette.primary.main}>
           <Link href='/' color='inherit' underline='none'>
             OuiShare
           </Link>

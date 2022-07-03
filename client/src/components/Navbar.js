@@ -129,10 +129,10 @@ const Navbar = () => {
           ) : (
             <>
               <Button variant='text' sx={{ minWidth: 80 }} href='/signup'>
-                Créer un compte
+                Création
               </Button>
               <Button variant='text' sx={{ minWidth: 65 }} href='/login'>
-                Se connecter
+                Connexion
               </Button>
             </>
           )}

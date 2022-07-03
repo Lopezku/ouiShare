@@ -1,4 +1,6 @@
 const User = require("../../models/User");
+const Invitation = require("../../models/Invitation");
+const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { send } = require("../services/mail");
@@ -150,7 +152,45 @@ const forgotPassword = async (req, res) => {
     return res.status(400).json({ error: err.message });
   }
 };
+const sendInvitation = async (req, res) => {
+  try {
+    const { idSender, idReceiver } = req.body;
+    if (!idSender || !idReceiver) {
+      throw new Error("Invitation impossible sans email");
+    }
 
+    const [sender, receiver] = await Promise.all([
+      User.findById(idSender),
+      User.findById(idReceiver),
+    ]);
+    if (!sender || !receiver) {
+      throw new Error(
+        "Vous ne pouvez faire d'invitation. Un des deux utilisateurs n'existe pas"
+      );
+    }
+    const invitation = await Invitation.create({
+      sender,
+      receiver,
+      status: "pending",
+    });
+    const message = {
+      from: "ouishare93@gmail.com",
+      to: receiver.email,
+      subject: "Demande de mise en contact pour vos services",
+      html: `<p><b>Bonjour de la part de toute l'équipe de Oui Share</b>
+         <p>${sender.username} vous a contacté pour obtenir plus d'informations sur vos services</p>
+         <p>Vous pouvez vous connecter pour voir son profil: <a href="https://ouishare.herokuapp.com/users/${sender.username}" target="_blank">https://ouishare.herokuapp.com/users/${sender.username}</a></p>`,
+    };
+    await send(message);
+    return res.status(200).json({
+      message: "Un email a été envoyé à la personne choisie",
+      error: null,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ error: err.message });
+  }
+};
 const updateUser = async (req, res) => {
   try {
     const { userId, isAdmin, ...props } = req.body;
@@ -229,14 +269,42 @@ const getRandomIndices = (size, sourceSize) => {
   }
   return randomIndices;
 };
+const getUsersInvitations = async (req, res) => {
+  try {
+    const { userId } = req.params;
 
+    const invitations = await Invitation.find({
+      receiver: mongoose.Types.ObjectId(userId),
+    }).populate({ path: "sender" });
+
+    return res.status(200).json({ data: { invitations } });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+const updateInvitations = async (req, res) => {
+  try {
+    const { invitationId } = req.params;
+    const { status } = req.body;
+
+    const invitation = await Invitation.findById(invitationId);
+    invitation.status = status;
+    await invitation.save();
+    return res.status(200).json({ data: { message: "success" } });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+updateInvitations;
 module.exports = {
   register,
   login,
-
+  sendInvitation,
   search,
   getUser,
   getRandomUsers,
   updateUser,
   forgotPassword,
+  getUsersInvitations,
+  updateInvitations,
 };

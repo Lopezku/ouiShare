@@ -1,3 +1,5 @@
+import { useTheme } from "@emotion/react";
+
 import {
   Button,
   Container,
@@ -16,7 +18,7 @@ import Copyright from "../Copyright";
 
 const LoginView = () => {
   const navigate = useNavigate();
-
+  const theme = useTheme();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -43,7 +45,11 @@ const LoginView = () => {
   return (
     <Container maxWidth={"xs"} sx={{ mt: 6 }}>
       <Stack alignItems='center'>
-        <Typography variant='h2' color='text.secondary' sx={{ mb: 6 }}>
+        <Typography
+          variant='h2'
+          color={theme.palette.primary.main}
+          sx={{ mb: 6 }}
+        >
           <Link href='/' color='inherit' underline='none'>
             OuiShare
           </Link>
@@ -85,10 +91,8 @@ const LoginView = () => {
         <Box sx={{ mt: 3 }}>
           <Copyright />
         </Box>
-        <Typography variant='h4' color='text.secondary'>
-          <Link href='/forgetPassword' color='inherit'>
-            Mot de passe perdu?
-          </Link>
+        <Typography variant={"h4"} mr={1} color={theme.palette.primary.main}>
+          <Link href='/forgetPassword'>Mot de passe perdu?</Link>
         </Typography>
       </Stack>
     </Container>

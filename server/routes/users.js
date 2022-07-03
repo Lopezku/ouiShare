@@ -6,6 +6,12 @@ const { verifyToken } = require("../../middleware/auth");
 router.post("/register", userControllers.register);
 router.post("/login", userControllers.login);
 router.post("/forgotPassword", userControllers.forgotPassword);
+router.post("/sendInvitation", userControllers.sendInvitation);
+router.get("/invitations/:userId", userControllers.getUsersInvitations);
+router.post(
+  "/updateInvitations/:invitationId",
+  userControllers.updateInvitations
+);
 router.get("/offers", userControllers.search);
 router.get("/random", userControllers.getRandomUsers);
 

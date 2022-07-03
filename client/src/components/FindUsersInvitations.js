@@ -2,7 +2,6 @@ import {
   Card,
   Divider,
   IconButton,
-  Link,
   Button,
   Stack,
   Typography,
@@ -19,6 +18,22 @@ import Loading from "./Loading";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
 
+const DeclinedInvitations = ({ invitations }) => {
+  return invitations.length ? (
+    invitations.map((invitation) => {
+      return (
+        <HorizontalStack justifyContent='space-between' key={invitation._id}>
+          <HorizontalStack>
+            <UserAvatar width={30} height={30} />
+            <Typography>{invitation.sender.name}</Typography>
+          </HorizontalStack>
+        </HorizontalStack>
+      );
+    })
+  ) : (
+    <div>Pas d'invitations refusées</div>
+  );
+};
 const AcceptedInvitations = ({ invitations }) => {
   return invitations.length ? (
     invitations.map((invitation) => {
@@ -26,13 +41,13 @@ const AcceptedInvitations = ({ invitations }) => {
         <HorizontalStack justifyContent='space-between' key={invitation._id}>
           <HorizontalStack>
             <UserAvatar width={30} height={30} />
-            <Typography>Nom:{invitation.sender.name}</Typography>
+            <Typography>{invitation.sender.name} </Typography>
           </HorizontalStack>
         </HorizontalStack>
       );
     })
   ) : (
-    <div>Pas d'invitations pending</div>
+    <div>Pas d'invitations acceptées</div>
   );
 };
 const PendingInvitations = ({ invitations, fetchInvitations }) => {
@@ -49,53 +64,62 @@ const PendingInvitations = ({ invitations, fetchInvitations }) => {
         <HorizontalStack justifyContent='space-between' key={invitation._id}>
           <HorizontalStack>
             <UserAvatar width={30} height={30} />
-            <Typography>
-              Invitations en attente reçues de :{invitation.sender.name}
-            </Typography>
+            <Typography>Accepter : {invitation.sender.name}</Typography>
+            <Divider />
+            <br></br>
             <Button
+              variant='outlined'
+              sx={{ backgroundColor: "white", mt: 1 }}
               color='success'
               onClick={() =>
                 handleInvitationRequest(invitation._id, "accepted")
               }
             >
-              A{" "}
+              Oui
             </Button>
             <Button
+              variant='outlined'
+              sx={{ backgroundColor: "white", mt: 1 }}
               color='error'
               onClick={() =>
                 handleInvitationRequest(invitation._id, "declined")
               }
             >
-              R{" "}
+              Non
             </Button>
           </HorizontalStack>
         </HorizontalStack>
       );
     })
   ) : (
-    <div>Pas d'invitations pending</div>
+    <div>Pas d'invitations en attente</div>
   );
 };
 
 const FindUsersInvitations = () => {
   const [loading, setLoading] = useState(true);
   const [invitations, setInvitations] = useState(null);
-  const userId = isLoggedIn().userId;
+  const userId = isLoggedIn() ? isLoggedIn().userId : "";
 
   const fetchInvitations = async () => {
     setLoading(true);
 
     const data = await getUsersInvitations(userId);
-    setLoading(false);
 
-    const groupedInvitations = data.data.invitations.reduce(
-      (acc, currentValue) => {
-        acc[currentValue.status].push(currentValue);
-        return acc;
-      },
-      { pending: [], accepted: [], declined: [] }
-    );
-    setInvitations(groupedInvitations);
+    if (data.data.error !== "User does not exist") {
+      setLoading(false);
+
+      const groupedInvitations = data.data.invitations.reduce(
+        (acc, currentValue) => {
+          acc[currentValue.status].push(currentValue);
+          return acc;
+        },
+        { pending: [], accepted: [], declined: [] }
+      );
+      setInvitations(groupedInvitations);
+    } else {
+      return [];
+    }
   };
 
   useEffect(() => {
@@ -129,14 +153,17 @@ const FindUsersInvitations = () => {
           <Loading />
         ) : (
           <>
+            <Typography color='text.primary'>Invitations en attente</Typography>
             <PendingInvitations
               invitations={invitations.pending}
               fetchInvitations={fetchInvitations}
             />
-            {
-              <AcceptedInvitations invitations={invitations.accepted} />
-              /* <DeclinedInvitations invitations={invitations.declined} /> */
-            }
+            <Divider />
+            <Typography color='text.secondary'>Vos Share amis</Typography>
+            <AcceptedInvitations invitations={invitations.accepted} />
+            <Divider />
+            <Typography color='text.secondary'>Vos Share ennemis</Typography>
+            <DeclinedInvitations invitations={invitations.declined} />
           </>
         )}
       </Stack>

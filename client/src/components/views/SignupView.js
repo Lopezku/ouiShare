@@ -157,6 +157,7 @@ const SignupView = () => {
               control={
                 <Radio onChange={handleChange} id='genderF' name='gender' />
               }
+              defaultChecked
               label='Femme'
               value='femme'
             />

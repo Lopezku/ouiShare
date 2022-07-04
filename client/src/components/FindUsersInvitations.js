@@ -110,6 +110,7 @@ const PendingInvitations = ({ invitations, fetchInvitations }) => {
 
 const FindUsersInvitations = () => {
   const [loading, setLoading] = useState(true);
+  const [errorFind, setErrorFind] = useState(false);
   const [invitations, setInvitations] = useState(null);
   const userId = isLoggedIn() ? isLoggedIn().userId : "";
 
@@ -117,6 +118,12 @@ const FindUsersInvitations = () => {
     setLoading(true);
 
     const data = await getUsersInvitations(userId);
+    const erreur = data.error === "User does not exist";
+    //TODO
+    if (erreur) {
+      setErrorFind(true);
+      //setLoading(false);
+    }
 
     if (data.data.error !== "User does not exist") {
       setLoading(false);
@@ -130,7 +137,12 @@ const FindUsersInvitations = () => {
       );
       setInvitations(groupedInvitations);
     } else if (data.data.error === "User does not exist") {
-      console.log("line 121", data);
+      console.log("line 133");
+      setLoading(false);
+      return [];
+    }
+    if (data.error === "User does not exist") {
+      console.log("line erreur");
       setLoading(false);
       return [];
     }
@@ -167,16 +179,26 @@ const FindUsersInvitations = () => {
           <Loading />
         ) : (
           <>
-            <Typography color='text.primary'>Invitations en attente</Typography>
-            <PendingInvitations
+            <Typography color='text.secondary'>
+              Invitations en attente
+            </Typography>
+            {errorFind ? (
+              <Typography color='text.secondary'>Pas connecté</Typography>
+            ) : (
+              <PendingInvitations
+                invitations={invitations.pending}
+                fetchInvitations={fetchInvitations}
+              />
+            )}
+            {/*  <PendingInvitations
               invitations={invitations.pending}
               fetchInvitations={fetchInvitations}
-            />
+            /> */}
             <Divider />
             <Typography color='text.secondary'>Vos Share amis</Typography>
             <AcceptedInvitations invitations={invitations.accepted} />
             <Divider />
-            <Typography color='text.secondary'>Vos Share ennemis</Typography>
+            <Typography color='text.secondary'>Invitations refusées</Typography>
             <DeclinedInvitations invitations={invitations.declined} />
           </>
         )}

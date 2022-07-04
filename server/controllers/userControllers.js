@@ -178,6 +178,17 @@ const sendInvitation = async (req, res) => {
         "Vous ne pouvez faire d'invitation. Un des deux utilisateurs n'existe pas"
       );
     }
+    /* TODO: check if invitation already exists to no send twice the email
+      const [senderInvit, receiverInvit] = await Promise.all([
+      Invitation.find({ sender: mongoose.Types.ObjectId(senderInvit) }),
+
+      Invitation.find({ receiver: mongoose.Types.ObjectId(receiverInvit) }),
+    ]);
+    if (senderInvit && receiverInvit) {
+      throw new Error(
+        "Vous ne pouvez envoyer d'invitation. Vous l'avez déjà fait"
+      );
+    } */
     const invitation = await Invitation.create({
       sender,
       receiver,

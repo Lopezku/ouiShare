@@ -19,7 +19,7 @@ import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
 
 const DeclinedInvitations = ({ invitations }) => {
-  return invitations.length ? (
+  return invitations?.length ? (
     invitations.map((invitation) => {
       return (
         <HorizontalStack justifyContent='space-between' key={invitation._id}>
@@ -39,7 +39,7 @@ const DeclinedInvitations = ({ invitations }) => {
   );
 };
 const AcceptedInvitations = ({ invitations }) => {
-  return invitations.length ? (
+  return invitations?.length ? (
     invitations.map((invitation) => {
       return (
         <HorizontalStack justifyContent='space-between' key={invitation._id}>
@@ -66,7 +66,7 @@ const PendingInvitations = ({ invitations, fetchInvitations }) => {
       fetchInvitations();
     }
   };
-  return invitations.length ? (
+  return invitations?.length ? (
     invitations.map((invitation) => {
       return (
         <HorizontalStack justifyContent='space-between' key={invitation._id}>
@@ -122,7 +122,7 @@ const FindUsersInvitations = () => {
     //TODO
     if (erreur) {
       setErrorFind(true);
-      //setLoading(false);
+      setLoading(false);
     }
 
     if (data.data.error !== "User does not exist") {
@@ -196,10 +196,10 @@ const FindUsersInvitations = () => {
             /> */}
             <Divider />
             <Typography color='text.secondary'>Vos Share amis</Typography>
-            <AcceptedInvitations invitations={invitations.accepted} />
+            <AcceptedInvitations invitations={invitations?.accepted} />
             <Divider />
             <Typography color='text.secondary'>Invitations refusées</Typography>
-            <DeclinedInvitations invitations={invitations.declined} />
+            <DeclinedInvitations invitations={invitations?.declined} />
           </>
         )}
       </Stack>

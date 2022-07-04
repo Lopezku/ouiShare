@@ -15,6 +15,7 @@ import LoginView from "./components/views/LoginView";
 import SignupView from "./components/views/SignupView";
 import ForgetPassword from "./components/views/ForgetPasswordView";
 import MainView from "./components/views/MainView";
+import StoryView from "./components/views/StoryView";
 import SearchView from "./components/views/SearchView";
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path='/' element={<MainView />} />
-
+          <Route path='/story' element={<StoryView />} />
           <Route path='/search' element={<SearchView />} />
           <Route path='/users/:id' element={<ProfileView />} />
           <Route path='/login' element={<LoginView />} />

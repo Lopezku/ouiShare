@@ -114,6 +114,7 @@ const search = async (req, res) => {
             offers: { $regex: new RegExp(search, "i") },
           },
           { username: { $regex: new RegExp(search, "i") } },
+          { needs: { $regex: new RegExp(search, "i") } },
         ],
       });
     else {

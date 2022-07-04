@@ -72,11 +72,13 @@ const Navbar = () => {
         spacing={!mobile ? 2 : 0}
       >
         <HorizontalStack>
-          <AiTwotoneApi
-            size={33}
-            color={theme.palette.primary.main}
-            onClick={() => navigate("/")}
-          />
+          <IconButton href='/story'>
+            <AiTwotoneApi
+              size={33}
+              color={theme.palette.primary.main}
+              /*           onClick={() => navigate("/")} */
+            />
+          </IconButton>
           <Typography
             sx={{ display: mobile ? "none" : "block" }}
             variant={navbarWidth ? "h6" : "h4"}
@@ -101,8 +103,8 @@ const Navbar = () => {
           <Box component='form' onSubmit={handleSubmit}>
             <TextField
               size='small'
-              label='Un service ou un share-ami?'
-              sx={{ flexGrow: 1, maxWidth: 300 }}
+              label='Besoins, services, amis?'
+              sx={{ flexGrow: 1, maxWidth: 350 }}
               onChange={handleChange}
               value={search}
             />
@@ -142,7 +144,7 @@ const Navbar = () => {
         <Box component='form' onSubmit={handleSubmit} mt={2}>
           <TextField
             size='small'
-            label='Un service ou un share-ami?'
+            label='Besoins, services, amis?'
             fullWidth
             onChange={handleChange}
             value={search}
